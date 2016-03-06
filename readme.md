@@ -1,11 +1,10 @@
+```
 title: Leanote导入导出MD工具
-date: 2015/04/01 15:43:41
-updated: 2015/04/01 15:48:15
-categories:
-- 代码
-tags:
-- Python
-- Leanote
+Date: 2015/04/01 15:43:41
+Modified: 2015/04/01 15:48:15
+Category: 代码, 
+Tags: Python, Leanote, 
+```
 
 ---
 #leanote导入导出MD工具
@@ -29,7 +28,7 @@ tags:
 #功能
 
 - [x] 从Leanote导入、导出笔记本/子笔记本到MD或txt文本文件
-- [x] 保存为兼容 hexo front matter 的tag、category、date、title等
+- [x] 保存为兼容`pelican front matter`的`tag、category、date、title`等
   - 由于0.1版本API限制，导入时暂时无法设置 保存时间、修改时间
 - [x] 只导入、导出不在垃圾箱的笔记
 - [x] 数不尽的bug
