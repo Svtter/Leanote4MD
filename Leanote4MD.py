@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#encoding: utf8
+# encoding: utf8
 #
 # author: goodbest <lovegoodbest@gmail.com>
 # github: github.com/goodbest
@@ -20,9 +20,9 @@ import ssl
 
 def is_ok(myjson):
     try:
-      json_object = json.loads(myjson)
+        json_object = json.loads(myjson)
     except ValueError, e:
-      return False
+        return False
 
     if 'Ok' in json_object:
         if json_object['Ok']:
@@ -53,14 +53,14 @@ def req_get(url, param = '', type = 'json', token = True):
                 #     rj=rj['Msg']
                 return rj
             else:
-                print '[Err] requests to url %s fail' %(r.url)
+                print '[Err] requests to url %s fail' % (r.url)
                 return None
         elif type=='image':
             i = Image.open(StringIO(r.content))
             return i
 
     else:
-        print '[Err] connect to url %s fail, error code %d ' %(r.url, r.status_cde)
+        print '[Err] connect to url %s fail, error code %d ' % (r.url, r.status_cde)
         return None
 
 
@@ -216,19 +216,19 @@ def saveToFile(notes, noteBooks, path = '.'):
                 print 'write file: %s' %filename
                 file.write('title: %s\n' %note['Title'].encode('utf-8'))
 
-
                 date = dateutil.parser.parse(note['CreatedTime'])
-                file.write('date: %s\n' %datetime.strftime(date.astimezone(local_zone), '%Y/%m/%d %H:%M:%S'))
+                file.write('Date: %s\n' %datetime.strftime(date.astimezone(local_zone), '%Y/%m/%d %H:%M:%S'))
 
                 date = dateutil.parser.parse(note['UpdatedTime'])
-                file.write('updated: %s\n' %datetime.strftime(date.astimezone(local_zone), '%Y/%m/%d %H:%M:%S'))
+                file.write('Modified: %s\n' %datetime.strftime(date.astimezone(local_zone), '%Y/%m/%d %H:%M:%S'))
 
                 if note['Tags']:
                     if len(note['Tags']) == 1:
                         if note['Tags'][0]:
-                            file.write('tags:\n')
+                            file.write('Tags: ', )
                             for tag in note['Tags']:
-                                file.write('- %s\n' %tag.encode('utf-8'))
+                                file.write('%s, ' %tag.encode('utf-8'), )
+                            file.write('\n')
 
                 category = []
                 current_notebook = note['NotebookId']
@@ -236,12 +236,13 @@ def saveToFile(notes, noteBooks, path = '.'):
                 while noteBooks[current_notebook]['ParentNotebookId'] != '':
                     category.append(noteBooks[noteBooks[current_notebook]['ParentNotebookId']]['Title'])
                     current_notebook = noteBooks[current_notebook]['ParentNotebookId']
-                file.write('categories:\n')
+                file.write('Category: ', )
                 category.reverse()
                 for cat in category:
-                    file.write('- %s\n' %cat.encode('utf-8'))
+                    file.write('%s, ' %cat.encode('utf-8'), )
+                file.write('\n')
 
-                file.write('---\n')
+                file.write('\n')
                 file.write('%s' %note['Content'].encode('utf-8'))
 
             file.close()
@@ -267,9 +268,9 @@ def LeanoteExportToMD(path = '.'):
         if not notebook['IsDeleted']:
             notesMeta = getNotesMeta(notebook['NotebookId'])
             for noteMeta in notesMeta:
-                    if not noteMeta['IsTrash']:
-                        note = getNoteDetail(noteMeta['NoteId'])
-                        notes.append(note)
+                if not noteMeta['IsTrash']:
+                    note = getNoteDetail(noteMeta['NoteId'])
+                    notes.append(note)
     print 'found %d notes' %len(notes)
 
     #write file
